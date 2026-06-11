@@ -10,9 +10,14 @@ export interface Tab {
 interface Props {
   tabs: Tab[];
   selectedTabId: string;
+  onTabSelected?: (tab: Tab) => void;
 }
 
-export const Tabs: React.FC<Props> = ({ tabs, selectedTabId }) => {
+export const Tabs: React.FC<Props> = ({
+  tabs,
+  selectedTabId,
+  onTabSelected,
+}) => {
   const isIdValid = tabs.some(tab => tab.id === selectedTabId);
   const activeId = isIdValid ? selectedTabId : '';
 
@@ -26,7 +31,16 @@ export const Tabs: React.FC<Props> = ({ tabs, selectedTabId }) => {
               className={tab.id === activeId ? 'is-active' : ''}
               data-cy="Tab"
             >
-              <Link to={`/tabs/${tab.id}`}>{tab.title}</Link>
+              <Link
+                to={`/tabs/${tab.id}`}
+                onClick={() => {
+                  if (onTabSelected) {
+                    onTabSelected(tab);
+                  }
+                }}
+              >
+                {tab.title}
+              </Link>
             </li>
           ))}
         </ul>
