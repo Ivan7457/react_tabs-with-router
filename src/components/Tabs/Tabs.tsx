@@ -34,7 +34,7 @@ export const Tabs: React.FC<Props> = ({
               <Link
                 to={`/tabs/${tab.id}`}
                 onClick={() => {
-                  if (onTabSelected) {
+                  if (onTabSelected && tab.id !== selectedTabId) {
                     onTabSelected(tab);
                   }
                 }}
